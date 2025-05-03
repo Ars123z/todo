@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
@@ -58,11 +59,11 @@ import kotlinx.coroutines.launch
 @Composable
 fun TaskScreen(
     modifier: Modifier = Modifier,
-    taskViewModel: TaskViewModel = viewModel(),
+    taskViewModel: TaskViewModel = viewModel(factory = TaskViewModel.Factory),
 ) {
     val bottomSheetState = rememberModalBottomSheetState()
     val coroutineScope = rememberCoroutineScope()
-    var task by remember { mutableStateOf<Task?>(null) }
+    var currentTask by remember { mutableStateOf<Task?>(null) }
     var openModal by remember { mutableStateOf(false) }
     var mode by remember { mutableStateOf("Add") }
     val taskList = taskViewModel.taskList.collectAsState().value
@@ -71,7 +72,7 @@ fun TaskScreen(
         floatingActionButton = {
             IconButton(
                 onClick = {
-                    task = null
+                    currentTask = null
                     mode = "Add"
                     openModal = true
                 }) {
@@ -86,12 +87,12 @@ fun TaskScreen(
                 .padding(top= 16.dp),
 
         ) {
-            items(taskList.size) { index ->
+            items(taskList, key= {it.id}) { task ->
                 TaskItem(
-                    task = taskList[index],
+                    task = task,
                     onRemove = { taskViewModel.removeTask(it) },
-                    onEdit = {
-                        task = it
+                    onEdit = { it ->
+                        currentTask = it
                         mode = "Edit"
                         openModal = true
                     }
@@ -100,7 +101,7 @@ fun TaskScreen(
         }
         if (openModal) {
             ModalSheet(
-                task = task,
+                task = currentTask,
                 mode = mode,
                 onCancel = { coroutineScope.launch { bottomSheetState.hide() }
                             openModal = false
