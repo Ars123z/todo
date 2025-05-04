@@ -46,17 +46,6 @@ class TaskViewModel(val taskRepo: TaskRepo) : ViewModel() {
         }
     }
 
-    fun toggleTaskCompletion(task: Task) {
-        viewModelScope.launch {
-            _taskList.update {
-                it.map {
-                    if (task.id == it.id ) {
-                        if (it.isCompleted) task.copy(isCompleted = false) else task.copy(isCompleted = true)
-                    } else it
-                }
-            }
-        }
-    }
 
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {

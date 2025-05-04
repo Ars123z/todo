@@ -1,6 +1,5 @@
 package com.example.basic_todo_app.ui.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -15,19 +14,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 
+
+
 @Composable
 fun TimePickerDialog(
-    onDismissRequest: () -> Unit,
-    confirmButton: @Composable () -> Unit,
-    dismissButton: @Composable (() -> Unit),
-    containerColor: Color = MaterialTheme.colorScheme.surface,
-    content: @Composable () -> Unit
+    onDismissRequest: () -> Unit, // Callback when the dialog is dismissed
+    confirmButton: @Composable () -> Unit,  // Composable for the confirm button
+    dismissButton: @Composable (() -> Unit), // Composable for the dismiss button
+    content: @Composable () -> Unit, // Composable for the content of the dialog we will pass timePicker
 ) {
+
     Dialog(
         onDismissRequest = onDismissRequest,
         properties = DialogProperties(
@@ -38,13 +38,10 @@ fun TimePickerDialog(
     ) {
         Surface(
             shape = MaterialTheme.shapes.extraLarge,
+            color = MaterialTheme.colorScheme.surface,
             tonalElevation = 6.dp,
-            modifier = Modifier.width(IntrinsicSize.Min)
-                .height(IntrinsicSize.Min)
-                .background(
-                    color = containerColor,
-                    shape = MaterialTheme.shapes.extraLarge
-                )
+            modifier = Modifier.width(IntrinsicSize.Min) // Adjust width to fit the children
+                .height(IntrinsicSize.Min) // Adjust height to fit the children
         ) {
             Column(
                 modifier = Modifier.padding(24.dp),
@@ -56,6 +53,7 @@ fun TimePickerDialog(
                         .padding(bottom = 20.dp),
                     style = MaterialTheme.typography.headlineLarge
                 )
+//                Display the content composable passed to the dialog
                 content()
                 Row(
                     modifier = Modifier
@@ -63,7 +61,9 @@ fun TimePickerDialog(
                         .fillMaxWidth()
                 ) {
                     Spacer(modifier = Modifier.weight(1f))
+//                    Display the dismiss button passed to the dialog
                     dismissButton()
+//                    Display the confirm button passed to the dialog
                     confirmButton()
                 }
             }

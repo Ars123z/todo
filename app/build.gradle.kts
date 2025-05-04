@@ -56,8 +56,6 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
-//    SplashScreen
-    implementation(libs.androidx.core.splashscreen)
 
 //    viewModel
     implementation(libs.androidx.lifecycle.viewmodel.compose)

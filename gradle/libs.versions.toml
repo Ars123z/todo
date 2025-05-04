@@ -1,7 +1,6 @@
 [versions]
 agp = "8.9.2"
 roomVersion = "2.7.1"
-splashScreen = "1.0.1"
 desugar_jdk_libs = "2.1.5"
 kotlin = "2.0.21"
 coreKtx = "1.16.0"
@@ -36,13 +35,10 @@ androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "l
 desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
 
 # Room
-androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version = "roomVersion" }
-androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version = "roomVersion" }
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
 
-#SplashScreen
-
-androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version = "splashScreen" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

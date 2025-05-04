@@ -61,19 +61,34 @@ fun TaskScreen(
     modifier: Modifier = Modifier,
     taskViewModel: TaskViewModel = viewModel(factory = TaskViewModel.Factory),
 ) {
+//    To Control the bottom sheet
     val bottomSheetState = rememberModalBottomSheetState()
+
+// To call the bottomSheet hide and show function
     val coroutineScope = rememberCoroutineScope()
+
+//    pass the task to the modal on update and null on add
     var currentTask by remember { mutableStateOf<Task?>(null) }
+
+//    variable to control the opening and closing of the modal
     var openModal by remember { mutableStateOf(false) }
+
+//    used to pass the appropriate mode to the modal
     var mode by remember { mutableStateOf("Add") }
+
+//    TaskList for displaying the tasks
     val taskList = taskViewModel.taskList.collectAsState().value
+
     Scaffold(
         topBar = { TopBar() },
         floatingActionButton = {
             IconButton(
                 onClick = {
+//                    making null in the add case
                     currentTask = null
+//                    setting mode
                     mode = "Add"
+//                    finally opening the modal
                     openModal = true
                 }) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add Task")
@@ -90,7 +105,9 @@ fun TaskScreen(
             items(taskList, key= {it.id}) { task ->
                 TaskItem(
                     task = task,
+//                    function to all on right swipe
                     onRemove = { taskViewModel.removeTask(it) },
+//                    function to call on left swipe
                     onEdit = { it ->
                         currentTask = it
                         mode = "Edit"
@@ -101,25 +118,31 @@ fun TaskScreen(
         }
         if (openModal) {
             ModalSheet(
+//                passing the task or null
                 task = currentTask,
+//                passing mode
                 mode = mode,
+//                hiding the modal on cancel
                 onCancel = { coroutineScope.launch { bottomSheetState.hide() }
                             openModal = false
                            },
+                //                saving the task on save or edit
                 onSave = { task ->
+                    if (mode == "Add") {
+                        taskViewModel.addTask(task)
+                    } else {
+                        taskViewModel.updateTask(task)
+                    }
                     coroutineScope.launch {
-                        if (mode == "Add") {
-                            taskViewModel.addTask(task)
-                        } else {
-                            taskViewModel.updateTask(task)
-                        }
                         bottomSheetState.hide()
                     }
                     openModal = false
                 },
+//                hiding the modal on dismiss
                 onDismiss = { coroutineScope.launch { bottomSheetState.hide() }
                                 openModal = false
                             },
+//                passing the bottom sheet state
                 bottomSheetState = bottomSheetState
             )
         }
@@ -135,16 +158,17 @@ fun TaskItem(
     onEdit: (Task) -> Unit
 ) {
     val context = LocalContext.current
-    val currentItem by rememberUpdatedState(task)
+//    val currentItem by rememberUpdatedState(task)
+//    state for Swipable box
     val dismissState = rememberSwipeToDismissBoxState(
         confirmValueChange = { it ->
             when(it) {
                 SwipeToDismissBoxValue.StartToEnd -> {
-                    onRemove(currentItem)
+                    onRemove(task)
                     Toast.makeText(context, "Item deleted", Toast.LENGTH_SHORT).show()
                 }
                 SwipeToDismissBoxValue.EndToStart -> {
-                    onEdit(currentItem)
+                    onEdit(task)
                     Toast.makeText(context, "Item archived", Toast.LENGTH_SHORT).show()
                     return@rememberSwipeToDismissBoxState false
 
@@ -156,6 +180,7 @@ fun TaskItem(
         // positional threshold of 25%
         positionalThreshold = { it * .25f }
     )
+
     SwipeToDismissBox(
         state = dismissState,
         modifier = modifier,
@@ -182,9 +207,11 @@ fun TaskItem(
     )
 }
 
+//for background of swippable box
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DismissBackground(dismissState: SwipeToDismissBoxState) {
+//    Changing the color based on swipe direction
     val color = when (dismissState.dismissDirection) {
         SwipeToDismissBoxValue.StartToEnd -> Color(0xFFFF1744)
         SwipeToDismissBoxValue.EndToStart -> Color(0xFF4CAF50)
@@ -199,6 +226,7 @@ fun DismissBackground(dismissState: SwipeToDismissBoxState) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
+//        Changing the icon based on swipe direction
         if (dismissState.dismissDirection == SwipeToDismissBoxValue.StartToEnd) {
             Icon(
                 Icons.Default.Delete,
@@ -215,11 +243,4 @@ fun DismissBackground(dismissState: SwipeToDismissBoxState) {
     }
 }
 
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Preview(showBackground = true)
-@Composable
-fun TaskScreenPreview() {
-    TaskScreen()
-}
 
