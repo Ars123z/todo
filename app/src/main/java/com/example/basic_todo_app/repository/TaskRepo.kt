@@ -31,7 +31,7 @@ interface TaskRepo {
 
 
 class OfflineTaskRepo(private val taskDao: TaskDao) : TaskRepo {
-
+//    We will pass the actual doa when we will pass the repo the AppContainer class
     override fun getAllTasks(): Flow<List<Task>> = taskDao.getAllItems()
     override suspend fun insertTask(task: Task) = taskDao.insert(task)
     override suspend fun deleteTask(task: Task) = taskDao.deleteTask(task)

@@ -47,11 +47,15 @@ class TaskViewModel(val taskRepo: TaskRepo) : ViewModel() {
     }
 
 
+//    because the viewModal doesn't support parameters by default,  we need to create a factory to pass the parameters to the view model
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
+//                Getting the application object we created from the view model factory
                 val application = (this[APPLICATION_KEY] as TaskApplication)
+//                Getting the task repo from the container object we created in the application class
                 val taskRepo = application.container.taskRepo
+                // Creating the view model with the task repo
                 TaskViewModel(taskRepo = taskRepo)
             }
         }

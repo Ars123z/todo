@@ -6,6 +6,8 @@ import java.time.LocalDate
 import java.time.LocalTime
 import java.util.UUID
 
+
+//TasK object to store in the database
 @Entity(tableName = "tasks")
 data class Task(
     @PrimaryKey

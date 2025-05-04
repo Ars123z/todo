@@ -15,6 +15,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             BasictodoappTheme {
+//                Displaying the task screen
                 TaskScreen()
             }
         }
