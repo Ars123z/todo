@@ -127,13 +127,13 @@ fun TaskScreen(
         if (true) {
             Box(modifier = Modifier.fillMaxSize()) {
                 // Background Image
-//                    Image(
-//                        bitmap = getImageFromAssets(LocalContext.current, "theme_${number}.webp")!!,
-//                        contentDescription = null,
-//                        modifier = Modifier
-//                            .fillMaxSize(),
-//                        contentScale = ContentScale.Crop
-//                    )
+                    Image(
+                        bitmap = getImageFromAssets(LocalContext.current, "theme_${number}.webp")!!,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
                 LazyColumn(
                     modifier = Modifier
                         .padding(paddingValues)
