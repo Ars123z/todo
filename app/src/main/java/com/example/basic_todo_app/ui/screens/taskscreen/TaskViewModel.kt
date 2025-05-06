@@ -20,6 +20,7 @@ class TaskViewModel(val taskRepo: TaskRepo) : ViewModel() {
     private val _taskList = MutableStateFlow<List<Task>>(emptyList())
     val taskList: StateFlow<List<Task>> = _taskList.asStateFlow()
 
+//    initializing the task list from the database on startup
     init {
         viewModelScope.launch {
             taskRepo.getAllTasks().collect { tasks ->
@@ -28,18 +29,22 @@ class TaskViewModel(val taskRepo: TaskRepo) : ViewModel() {
         }
     }
 
+//    function to add a task in the database
     fun addTask(task: Task) {
         viewModelScope.launch {
             taskRepo.insertTask(task)
         }
     }
 
+//    function to remove a task from the database
     fun removeTask(task: Task) {
         viewModelScope.launch {
             taskRepo.deleteTask(task)
         }
     }
 
+
+// function to update the task in the database
     fun updateTask(task: Task) {
         viewModelScope.launch {
             taskRepo.updateTask(task)

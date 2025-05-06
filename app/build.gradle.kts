@@ -56,12 +56,17 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
+//    Navigation
+    implementation(libs.androidx.navigation.compose)
 
 //    viewModel
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
 //    Java Desugaring
     coreLibraryDesugaring(libs.desugar.jdk.libs)
+
+//    Preferences Datastore
+    implementation(libs.androidx.datastore.preferences)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

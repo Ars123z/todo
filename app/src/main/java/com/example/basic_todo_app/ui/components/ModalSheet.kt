@@ -113,7 +113,7 @@ fun ModalSheet(
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = bottomSheetState,
-        containerColor = Color(0xFF000000),
+        containerColor = Color(0x4B000000),
         contentColor = Color.White
     ) {
         Column(
