@@ -13,16 +13,15 @@ import androidx.room.TypeConverters
 @TypeConverters(Converters::class)
 abstract class TaskDatabase : RoomDatabase() {
 
-//    Dao objects to interact with the database only one dao object is needed for this project
+    //    Dao objects to interact with the database only one dao object is needed for this project
     abstract fun taskDao(): TaskDao
 
-    //    Singleton Instance object to hold the database instance
     companion object {
-//        object to the hold the database instance or null if none exist
+        //        variable to the hold the database instance or null if none exist Volatile annotation bypass the thread cache and ensures that the value of Instance is always up-to-date.
         @Volatile
         private var Instance: TaskDatabase? = null
 
-//        function to get the database instance or create a new one if none exist
+        //        function to get the database instance or create a new one if none exist
         fun getDatabase(context: Context): TaskDatabase {
             // if the Instance is not null, return it, otherwise create a new database instance.
             return Instance ?: synchronized(this) {

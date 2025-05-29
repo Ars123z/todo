@@ -31,6 +31,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TimePicker
 import androidx.compose.material3.rememberDatePickerState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -41,14 +42,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.basic_todo_app.data.Task
+import com.example.basic_todo_app.ui.theme.BasictodoappTheme
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class) // SheetState Requires this annotation
 @Composable
 fun ModalSheet(
     task: Task?,
@@ -100,9 +103,10 @@ fun ModalSheet(
 //    state to pass to the date picker with initial date selection
     val datePickerState = rememberDatePickerState(
         initialSelectedDateMillis = date?.toEpochDay()?.times(86400000) ?: System.currentTimeMillis()
+//        convert a date to millisecond count since linux epoch (1970-01-01)
     )
 
-//    stte to pass to the time picker with initial time selection
+//    state to pass to the time picker with initial time selection
     val timePickerState = rememberTimePickerState(
         initialHour = time?.hour ?: LocalTime.now().hour,
         initialMinute = time?.minute ?: LocalTime.now().minute,
@@ -217,7 +221,7 @@ fun ModalSheet(
                     modifier = Modifier
                         .border(
                             width = 1.dp,
-                            color = Color(0xFF4CAF50), // Green border
+                            color = MaterialTheme.colorScheme.primary, // Green border
                             shape = ShapeDefaults.Medium
                         )
                 ) {
@@ -247,7 +251,7 @@ fun ModalSheet(
                     }
                 },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF4CAF50),            // A rich green (Material Design primary green)
+                    containerColor = MaterialTheme.colorScheme.primary,            // A rich green (Material Design primary green)
                     contentColor = Color.White,                    // White text for contrast
                     disabledContainerColor = Color(0xFFBDBDBD),     // Medium gray for disabled background
                     disabledContentColor = Color(0xFFEEEEEE)        // Light gray text for disabled state

@@ -19,7 +19,6 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 
 
-
 @Composable
 fun TimePickerDialog(
     onDismissRequest: () -> Unit, // Callback when the dialog is dismissed
@@ -31,9 +30,9 @@ fun TimePickerDialog(
     Dialog(
         onDismissRequest = onDismissRequest,
         properties = DialogProperties(
-            dismissOnBackPress = true,
-            dismissOnClickOutside = true,
-            usePlatformDefaultWidth = false
+            dismissOnBackPress = true, //Dismiss the dialogue when back button is pressed
+            dismissOnClickOutside = true, //Dismiss the dialogue when clicked outside
+            usePlatformDefaultWidth = false // Don't Use platform default width for the dialog allows use to fix the width of the dialogue ourself
         )
     ) {
         Surface(
@@ -70,3 +69,4 @@ fun TimePickerDialog(
         }
     }
 }
+

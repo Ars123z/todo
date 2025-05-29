@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.TypeConverters
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
@@ -13,7 +14,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TaskDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert
     suspend fun insert(task: Task)
 
     @Query("SELECT * from tasks")
@@ -24,5 +25,4 @@ interface TaskDao {
 
     @Update
     suspend fun updateTask(task: Task)
-
 }

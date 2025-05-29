@@ -7,8 +7,10 @@ import java.time.LocalTime
 import java.util.UUID
 
 
-//TasK object to store in the database
-@Entity(tableName = "tasks")
+//Task object to store in the database
+@Entity(
+    tableName = "tasks",
+)
 data class Task(
     @PrimaryKey
     val id: UUID = UUID.randomUUID(),

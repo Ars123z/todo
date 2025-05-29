@@ -68,6 +68,12 @@ dependencies {
 //    Preferences Datastore
     implementation(libs.androidx.datastore.preferences)
 
+//    SplashScreen
+    implementation(libs.androidx.core.splashscreen)
+
+//    Animation
+    implementation(libs.accompanist.navigation.animation)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
